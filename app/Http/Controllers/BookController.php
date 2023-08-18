@@ -2,11 +2,27 @@
 
 namespace App\Http\Controllers;
 
+// package
 use App\Models\Book;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
+    /**
+     * @return array
+     */
+    public function bookValidate()
+    {
+        return request()->validate([
+            'title'        => 'required',
+            'pengarang'    => 'required',
+            'tahun_terbit' => 'required|numeric',
+            'jenis_buku'   => 'required',
+            'photo'        => 'image',
+            'stok'         => 'required',
+            'deskripsi'    => 'required',
+        ]);
+    }
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
@@ -29,8 +45,10 @@ class BookController extends Controller
     public function store()
     {
         $attr = $this->bookValidate();
-        $attr['photo'] = request()->hasFile('photo') ? request()->file('photo')->storeAs('public/perpusku',
-            request()->file('photo')->hashName()) : 'null';
+        $attr['photo'] = request()->hasFile('photo') ? request()->file('photo')->storeAs(
+            'public/perpusku',
+            request()->file('photo')->hashName()
+        ) : 'null';
 
         Book::create($attr);
         session()->flash('success', 'Buku berhasil ditambahakan');
@@ -83,21 +101,5 @@ class BookController extends Controller
         session()->flash('success', 'Buku berhasil dihapus');
 
         return redirect()->route('perpusku.book.index');
-    }
-
-    /**
-     * @return array
-     */
-    public function bookValidate()
-    {
-        return request()->validate([
-            'title'        => 'required',
-            'pengarang'    => 'required',
-            'tahun_terbit' => 'required|numeric',
-            'jenis_buku'   => 'required',
-            'photo'        => 'image',
-            'stok'         => 'required',
-            'deskripsi'    => 'required',
-        ]);
     }
 }

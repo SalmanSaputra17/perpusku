@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Laporan</title>
@@ -37,43 +38,46 @@
         }
     </style>
 </head>
+
 <body class="A4" onclick="window.print()">
-<section class="sheet padding-10mm">
-    <h1>LAPORAN PEMINJAMAN BUKU PERPUSKU</h1>
+    <section class="sheet padding-10mm">
+        <h1>LAPORAN PEMINJAMAN BUKU PERPUSKU</h1>
 
-    <table class="table">
-        <thead>
-            <th class="p-4">#</th>
-            <th class="p-4" colspan="2">Buku</th>
-            <th class="p-4">Nama Peminjam</th>
-            <th class="p-4">Tanggal Pinjam</th>
-            <th class="p-4">Tanggal Kembali</th>
-            <th class="p-4">Keterangan</th>
-        </thead>
-        <tbody>
-        @php
-            $no = 0;
-        @endphp
+        <table class="table">
+            <thead>
+                <th class="p-4">#</th>
+                <th class="p-4" colspan="2">Buku</th>
+                <th class="p-4">Nama Peminjam</th>
+                <th class="p-4">Tanggal Pinjam</th>
+                <th class="p-4">Tanggal Kembali</th>
+                <th class="p-4">Keterangan</th>
+            </thead>
+            <tbody>
+                @php
+                    $no = 0;
+                @endphp
 
-        @forelse ($borrows as $borrow)
-            <tr class="justify-item-center" style="position: relative">
-                <td class="p-4">{{ ++$no }}</td>
-                <td class="p-4"><img src="{{ Storage::url($borrow->book->photo) }}" class="img rounded" height="100px"
-                                     width="100px"></td>
-                <td class="p-4">{{ $borrow->book->title }}</td>
-                <td class="p-4"><b>{{ $borrow->user->name }}</b></td>
-                <td class="p-4">{{ $borrow->tanggal_pinjam }}</td>
-                <td class="p-4">{{ $borrow->tanggal_kembali }}</td>
-                <td class="p-4"><i>{{ $borrow->keterangan == null ? 'none' : $borrow->keterangan }}</i></td>
-            </tr>
-        @empty
-            <tr>
-                <td class="bg-danger text-light p-4" colspan="8">Anda Belum meminjam Buku, <b>Ayo Pinjam</b></td>
-            </tr>
-        @endforelse
-        </tbody>
-    </table>
+                @forelse ($borrows as $borrow)
+                    <tr class="justify-item-center" style="position: relative">
+                        <td class="p-4">{{ ++$no }}</td>
+                        <td class="p-4"><img src="{{ Storage::url($borrow->book->photo) }}" class="img rounded"
+                                height="100px" width="100px"></td>
+                        <td class="p-4">{{ $borrow->book->title }}</td>
+                        <td class="p-4"><b>{{ $borrow->user->name }}</b></td>
+                        <td class="p-4">{{ $borrow->tanggal_pinjam }}</td>
+                        <td class="p-4">{{ $borrow->tanggal_kembali }}</td>
+                        <td class="p-4"><i>{{ $borrow->keterangan == null ? 'none' : $borrow->keterangan }}</i></td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td class="bg-danger text-light p-4" colspan="8">Anda Belum meminjam Buku, <b>Ayo Pinjam</b>
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
 
-</section>
+    </section>
 </body>
+
 </html>

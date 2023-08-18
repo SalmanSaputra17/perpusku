@@ -40,21 +40,29 @@ class BorrowController extends Controller
     public function store()
     {
         if (auth()->user()->role !== 'member') {
-            if (in_array(request('user_id'), Borrow::pluck('user_id')->toArray()) && in_array(request('book_id'),
-                    Borrow::pluck('book_id')->toArray()) && ! in_array(Borrow::where('user_id',
-                    request('user_id'))->where('book_id', request('book_id'))->latest()->first()->status,
-                    ['kembali', 'booking'])) {
+            if (in_array(request('user_id'), Borrow::pluck('user_id')->toArray()) && in_array(
+                request('book_id'),
+                Borrow::pluck('book_id')->toArray()
+            ) && !in_array(
+                Borrow::where(
+                    'user_id',
+                    request('user_id')
+                )->where('book_id', request('book_id'))->latest()->first()->status,
+                ['kembali', 'booking']
+            )) {
                 session()->flash('illegal', 'dia sudah meminjam buku ini');
 
                 return back();
             }
         } else {
-            // dd(!in_array('pinjam',['kembali','booking']));
-            // dd(!in_array(Borrow::where('user_id',request('user_id'))->where('book_id', request('book_id'))->latest()->first()->status,['kembali','booking']));
-            if (in_array(auth()->id(), Borrow::pluck('user_id')->toArray()) && in_array(request('book_id'),
-                    Borrow::pluck('book_id')->toArray())) {
-                $statusChecked = Borrow::where('user_id', request('user_id'))->where('book_id',
-                    request('book_id'))->pluck('status')->toArray();
+            if (in_array(auth()->id(), Borrow::pluck('user_id')->toArray()) && in_array(
+                request('book_id'),
+                Borrow::pluck('book_id')->toArray()
+            )) {
+                $statusChecked = Borrow::where('user_id', request('user_id'))->where(
+                    'book_id',
+                    request('book_id')
+                )->pluck('status')->toArray();
                 if (in_array('pinjam', $statusChecked)) {
                     session()->flash('illegal', 'anda sudah meminjam buku ini');
 

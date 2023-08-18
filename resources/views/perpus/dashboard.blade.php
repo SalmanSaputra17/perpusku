@@ -14,38 +14,35 @@
         <div class="row">
             <div class="col-lg-4 column">
                 <div class="icon">
-                    <img
-                        src="http://api.elements.buildwithangga.com/storage/files/2/assets/Content/Content2/Content-2-5.png"
-                        alt=""/>
+                    <img src="http://api.elements.buildwithangga.com/storage/files/2/assets/Content/Content2/Content-2-5.png"
+                        alt="" />
                 </div>
                 <h3 class="icon-title">Gerakan GLS</h3>
                 <p class="icon-caption">
-                    Program untuk meningkatkan<br/>
+                    Program untuk meningkatkan<br />
                     minat siswa terhadap membaca
                 </p>
             </div>
             <div class="col-lg-4 column">
                 <div class="icon">
-                    <img
-                        src="http://api.elements.buildwithangga.com/storage/files/2/assets/Content/Content2/Content-2-6.png"
-                        alt=""/>
+                    <img src="http://api.elements.buildwithangga.com/storage/files/2/assets/Content/Content2/Content-2-6.png"
+                        alt="" />
                 </div>
                 <h3 class="icon-title">Lengkap</h3>
                 <p class="icon-caption">
-                    Membaca banyak buku dari<br/>
+                    Membaca banyak buku dari<br />
                     perpustakkan smk wikrama
                 </p>
             </div>
 
             <div class="col-lg-4 column">
                 <div class="icon">
-                    <img
-                        src="http://api.elements.buildwithangga.com/storage/files/2/assets/Content/Content2/Content-2-7.png"
-                        alt=""/>
+                    <img src="http://api.elements.buildwithangga.com/storage/files/2/assets/Content/Content2/Content-2-7.png"
+                        alt="" />
                 </div>
                 <h3 class="icon-title">Menyenangkan</h3>
                 <p class="icon-caption">
-                    Membaca banyak buku baik<br/>
+                    Membaca banyak buku baik<br />
                     fiksi maupun non-fiksi
                 </p>
             </div>

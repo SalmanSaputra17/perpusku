@@ -7,8 +7,7 @@
         </div>
 
         <div class="my-2 text-right">
-            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                    data-target="#exampleModal">
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">
                 Tambah
             </button>
         </div>
@@ -25,43 +24,43 @@
                 <th class="p-4">Action</th>
             </thead>
             <tbody>
-            @php
-                $no = 0;
-            @endphp
-            @forelse ($books as $book)
-                <tr class="justify-item-center">
-                    <td class="p-4">{{ ++$no }}</td>
-                    <td class="p-4"><img src="{{ Storage::url($book->photo) }}" class="img rounded" height="100px"
-                                         width="100px"></td>
-                    <td class="p-4">{{ $book->title }}</td>
-                    <td class="p-4">{{ $book->pengarang }}</td>
-                    <td class="p-4">{{ $book->tahun_terbit }}</td>
-                    <td class="p-4">{{ $book->jenis_buku }}</td>
-                    <td class="p-4">{{ $book->stok }}</td>
-                    <td class="p-4">
-                        <form action="{{ route('perpusku.book.destroy', $book) }}" method="POST"
-                              onsubmit="return confirm('Apakah anda ingin mengahapus buku : {{ $book->title }}'); false">
-                            @csrf
-                            @method('delete')
+                @php
+                    $no = 0;
+                @endphp
+                @forelse ($books as $book)
+                    <tr class="justify-item-center">
+                        <td class="p-4">{{ ++$no }}</td>
+                        <td class="p-4"><img src="{{ Storage::url($book->photo) }}" class="img rounded" height="100px"
+                                width="100px"></td>
+                        <td class="p-4">{{ $book->title }}</td>
+                        <td class="p-4">{{ $book->pengarang }}</td>
+                        <td class="p-4">{{ $book->tahun_terbit }}</td>
+                        <td class="p-4">{{ $book->jenis_buku }}</td>
+                        <td class="p-4">{{ $book->stok }}</td>
+                        <td class="p-4">
+                            <form action="{{ route('perpusku.book.destroy', $book) }}" method="POST"
+                                onsubmit="return confirm('Apakah anda ingin mengahapus buku : {{ $book->title }}'); false">
+                                @csrf
+                                @method('delete')
 
-                            <a href="{{ route('perpusku.book.edit', $book) }}"
-                               class="btn btn-warning btn-sm mb-2">Ubah</a>
-                            <button class="btn btn-danger btn-sm" type="submit">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td class="bg-danger text-light" colspan="8">Belum ada buku</td>
-                </tr>
-            @endforelse
+                                <a href="{{ route('perpusku.book.edit', $book) }}"
+                                    class="btn btn-warning btn-sm mb-2">Ubah</a>
+                                <button class="btn btn-danger btn-sm" type="submit">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td class="bg-danger text-light" colspan="8">Belum ada buku</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 
     <!-- Modal -->
     <div class="modal fade rounded" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: lightblue">
@@ -76,33 +75,33 @@
                         <div class="form-group">
                             <label for="">Judul</label>
                             <input type="text" class="form-control mb-4" placeholder="Judul" name="title"
-                                   value="{{ old('title') }}">
+                                value="{{ old('title') }}">
                             @error('title')
-                            <div class="text-danger text-sm">
-                                {{ $message }}
-                            </div>
+                                <div class="text-danger text-sm">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Pengarang</label>
                             <input type="text" class="form-control mb-4" placeholder="Pengarang" name="pengarang"
-                                   value="{{ old('pengarang') }}">
+                                value="{{ old('pengarang') }}">
                             @error('pengarang')
-                            <div class="text-danger text-sm">
-                                {{ $message }}
-                            </div>
+                                <div class="text-danger text-sm">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Tahun terbit</label>
                             <input type="number" class="form-control mb-4" placeholder="tahun terbit contoh 2020"
-                                   name="tahun_terbit" value="{{ old('tahun_terbit') }}">
+                                name="tahun_terbit" value="{{ old('tahun_terbit') }}">
                             @error('tahun_terbit')
-                            <div class="text-danger text-sm">
-                                {{ $message }}
-                            </div>
+                                <div class="text-danger text-sm">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
@@ -115,9 +114,9 @@
                                 @endforeach
                             </select>
                             @error('jenis_buku')
-                            <div class="text-danger text-sm">
-                                {{ $message }}
-                            </div>
+                                <div class="text-danger text-sm">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
@@ -125,31 +124,31 @@
                             <label for="">Photo Buku</label>
                             <input type="file" name="photo" class="form-control">
                             @error('photo')
-                            <div class="text-danger text-sm">
-                                {{ $message }}
-                            </div>
+                                <div class="text-danger text-sm">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Stok Buku</label>
-                            <input type="number" name="stok" class="form-control"
-                                   placeholder="stok buku" value="{{ old('stok') }}">
+                            <input type="number" name="stok" class="form-control" placeholder="stok buku"
+                                value="{{ old('stok') }}">
                             @error('stok')
-                            <div class="text-danger text-sm">
-                                {{ $message }}
-                            </div>
+                                <div class="text-danger text-sm">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Sinopsis</label>
                             <textarea name="deskripsi" id="deskripsi" cols="30" rows="10" class="form-control"
-                                      placeholder="tulis sinopsi buku">{{ old('deskripsi') }}</textarea>
+                                placeholder="tulis sinopsi buku">{{ old('deskripsi') }}</textarea>
                             @error('deskripsi')
-                            <div class="text-danger text-sm">
-                                {{ $message }}
-                            </div>
+                                <div class="text-danger text-sm">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
                     </div>
