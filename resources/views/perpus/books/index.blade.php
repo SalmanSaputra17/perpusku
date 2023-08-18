@@ -13,12 +13,12 @@
         <table class="table table-stripped rounded-pill">
             <thead style="background-color:#0ec8f8;" class="text-light">
                 <th class="p-4">#</th>
-                <th class="p-4">Photo</th>
-                <th class="p-4">Judul</th>
-                <th class="p-4">Pengarang</th>
-                <th class="p-4">Tahun Terbit Buku</th>
-                <th class="p-4">Jenis Buku</th>
-                <th class="p-4">Stok</th>
+                <th class="p-4">Foto</th>
+                <th class="p-4">Title</th>
+                <th class="p-4">Author</th>
+                <th class="p-4">Tahun Terbit</th>
+                <th class="p-4">Jenis</th>
+                <th class="p-4">Stock</th>
                 <th class="p-4">Action</th>
             </thead>
 
