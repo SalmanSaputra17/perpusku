@@ -28,7 +28,7 @@
           <div class="container">
               <div class="row align-items-center justify-content-center">
               <div class="col-md-7 mt-2">
-                  <h3 style="font-family: 'Staatliches', cursive;">P e r p u s k u</h3>
+                  <h3 style="font-family: 'Staatliches', cursive;">Perpusku</h3>
                   <p class="mb-4">Aplikasi Perpustakaan Digital</p>
                   <form method="POST" action="{{ route('auth.register') }}">
                       @csrf

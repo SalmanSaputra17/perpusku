@@ -5,64 +5,81 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Borrow;
-use Illuminate\Http\Request;
 
 class BorrowController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
-        if(auth()->user()->role == 'member'){
+        if (auth()->user()->role == 'member') {
             $borrows = Borrow::latest()->where('user_id', auth()->id())->paginate(15);
-        }else{
+        } else {
             $borrows = Borrow::latest()->paginate(15);
         }
 
         $users = User::all();
         $books = Book::where('stok', '>', 0)->get();
+
         return view('perpus.borrows.index', compact('borrows', 'users', 'books'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         return view('perpus.borrow.create');
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store()
     {
-        if(auth()->user()->role !== 'member'){
-            if(in_array(request('user_id'),Borrow::pluck('user_id')->toArray()) && in_array(request('book_id'),Borrow::pluck('book_id')->toArray()) && !in_array(Borrow::where('user_id',request('user_id'))->where('book_id', request('book_id'))->latest()->first()->status,['kembali','booking'])){
-                session()->flash('illegal','dia sudah meminjam buku ini');
+        if (auth()->user()->role !== 'member') {
+            if (in_array(request('user_id'), Borrow::pluck('user_id')->toArray()) && in_array(request('book_id'),
+                    Borrow::pluck('book_id')->toArray()) && ! in_array(Borrow::where('user_id',
+                    request('user_id'))->where('book_id', request('book_id'))->latest()->first()->status,
+                    ['kembali', 'booking'])) {
+                session()->flash('illegal', 'dia sudah meminjam buku ini');
+
                 return back();
             }
-        }else{
+        } else {
             // dd(!in_array('pinjam',['kembali','booking']));
             // dd(!in_array(Borrow::where('user_id',request('user_id'))->where('book_id', request('book_id'))->latest()->first()->status,['kembali','booking']));
-            if(in_array(auth()->id(),Borrow::pluck('user_id')->toArray()) && in_array(request('book_id'),Borrow::pluck('book_id')->toArray())){
-                $statusChecked = Borrow::where('user_id',request('user_id'))->where('book_id', request('book_id'))->pluck('status')->toArray();
-                if(in_array('pinjam',$statusChecked)){
-                    session()->flash('illegal','anda sudah meminjam buku ini');
+            if (in_array(auth()->id(), Borrow::pluck('user_id')->toArray()) && in_array(request('book_id'),
+                    Borrow::pluck('book_id')->toArray())) {
+                $statusChecked = Borrow::where('user_id', request('user_id'))->where('book_id',
+                    request('book_id'))->pluck('status')->toArray();
+                if (in_array('pinjam', $statusChecked)) {
+                    session()->flash('illegal', 'anda sudah meminjam buku ini');
+
                     return back();
-                }elseif(in_array('booking',$statusChecked)){
-                    session()->flash('illegal','buku sedang anda booking');
+                } elseif (in_array('booking', $statusChecked)) {
+                    session()->flash('illegal', 'buku sedang anda booking');
+
                     return back();
                 }
             }
         }
 
-
         $this->validate(request(), [
-            'user_id' => 'required',
-            'book_id' => 'required',
-            'tanggal_pinjam' => 'required',
+            'user_id'         => 'required',
+            'book_id'         => 'required',
+            'tanggal_pinjam'  => 'required',
             'tanggal_kembali' => 'required',
         ]);
 
         $data = request()->except([]);
 
-        if(auth()->user()->role == 'member'){
+        if (auth()->user()->role == 'member') {
             $data['status'] = 'booking';
             $data['keterangan'] = 'menunggu konfirmasi petugas';
-        }else{
+        } else {
             $data['status'] = 'pinjam';
             $data['keterangan'] = 'buku masih dipinjam';
         }
@@ -70,21 +87,31 @@ class BorrowController extends Controller
         $borrow = Borrow::create($data);
 
         session()->flash('success', 'Buku berhasi dipinjam');
+
         return redirect()->route('perpusku.borrow.index');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function kembali($id)
     {
         $kembaliBuku = Borrow::find($id);
         $kembaliBuku->update([
-            'status' => 'kembali',
+            'status'     => 'kembali',
             'keterangan' => 'Buku Sudah kembali',
         ]);
 
         $kembaliBuku->book->where('id', $kembaliBuku->book_id)->update(['stok' => $kembaliBuku->book->stok + 1]);
+
         return back();
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function denda($id)
     {
         $dendaBuku = Borrow::find($id);
@@ -93,38 +120,47 @@ class BorrowController extends Controller
             'denda' => $dendaBuku->user->denda + 500,
         ]);
         session()->flash('success', 'Pemberian denda berhasil');
+
         return back();
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function konfirmasi($id)
     {
-        $konfiBuku =  Borrow::find($id);
+        $konfiBuku = Borrow::find($id);
 
-        if(Book::find($konfiBuku->book_id)->stok <= 0){
+        if (Book::find($konfiBuku->book_id)->stok <= 0) {
             $konfiBuku->update([
                 'keterangan' => 'Buku terakhir sudah dipinjam user lain, silakan pinjam buku lain',
             ]);
-            session()->flash('illegal','Buku terakhir sudah dipinjam user lain, silakan pinjam buku lain');
+            session()->flash('illegal', 'Buku terakhir sudah dipinjam user lain, silakan pinjam buku lain');
+
             return back();
         }
 
         $konfiBuku->update([
-            'status' => 'pinjam',
+            'status'     => 'pinjam',
             'keterangan' => 'Buku masih dipinjam',
         ]);
 
-        $konfiBuku->book->where('id', $konfiBuku->book_id)
-        ->update([ 'stok' => ($konfiBuku->book->stok - 1)]);
+        $konfiBuku->book->where('id', $konfiBuku->book_id)->update(['stok' => ($konfiBuku->book->stok - 1)]);
 
         return back();
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $borrowHapus = Borrow::find($id);
-        if($borrowHapus->status == 'kembali' || $borrowHapus->status == 'booking' ){
+        if ($borrowHapus->status == 'kembali' || $borrowHapus->status == 'booking') {
             $borrowHapus->delete();
-        }else{
+        } else {
             $bookStok = Book::find($borrowHapus->book_id);
             $bookStok->stok = $bookStok->stok + 1;
             $bookStok->save();
@@ -132,12 +168,17 @@ class BorrowController extends Controller
         }
 
         session()->flash('success', 'Berhasil dihapus');
+
         return back();
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function print()
     {
         $borrows = Borrow::latest()->paginate(15);
+
         return view('perpus.borrows.print', compact('borrows'));
     }
 }
