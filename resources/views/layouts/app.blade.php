@@ -21,6 +21,8 @@
             crossorigin="anonymous"></script>
 </head>
 <body style="height: 100%">
+
+<!-- section pembuka  -->
 <section class="h-100 w-100 bg-white" style="box-sizing: border-box">
     <nav class="navbar-1-1 navbar navbar-expand-lg navbar-light p-4 px-md-4 mb-3 bg-body"
          style="font-family: Poppins, sans-serif">
@@ -68,6 +70,7 @@
     </nav>
 </section>
 
+<!-- ini session pada saat success  -->
 <section class="h-100 w-100 bg-white" style="box-sizing: border-box ">
     <div class="content-2-2 container-xxl mx-auto p-0  position-relative p-4 m-4"
          style="font-family: 'Poppins', sans-serif">
@@ -87,6 +90,7 @@
     </div>
 </section>
 
+<!-- section footer  -->
 <section class="h-100 w-100 bg-white" style="box-sizing: border-box">
     <div class="footer-2-2 container-xxl mx-auto position-relative p-0" style="font-family: 'Poppins', sans-serif">
         <div class="border-color info-footer">
