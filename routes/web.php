@@ -18,13 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('perpusku')->name('perpusku.')->group(function () {
-        Route::get('/book', [BookController::class, 'index'])->name('book.index');
-        Route::get('/book', [BookController::class, 'index'])->name('book.index');
-        Route::post('/book/create', [BookController::class, 'store'])->name('book.store');
-        Route::get('/book/{id}', [BookController::class, 'edit'])->name('book.edit');
-        Route::patch('/book/{id}', [BookController::class, 'update']);
-        Route::delete('/book/{id}', [BookController::class, 'destroy'])->name('book.destroy');
-
+        // route pinjam
         Route::get('/borrow', [BorrowController::class, 'index'])->name('borrow.index');
         Route::post('/borrow', [BorrowController::class, 'store']);
         Route::patch('/borrow/konfirmasi/{id}', [BorrowController::class, 'konfirmasi'])->name('borrow.konfirmasi');
@@ -33,6 +27,15 @@ Route::middleware('auth')->group(function () {
         Route::delete('/borrow/delete/{id}', [BorrowController::class, 'destroy'])->name('borrow.destroy');
         Route::get('/borrow/print', [BorrowController::class, 'print'])->name('borrow.print');
 
+        // route buku
+        Route::get('/book', [BookController::class, 'index'])->name('book.index');
+        Route::get('/book', [BookController::class, 'index'])->name('book.index');
+        Route::post('/book/create', [BookController::class, 'store'])->name('book.store');
+        Route::get('/book/{id}', [BookController::class, 'edit'])->name('book.edit');
+        Route::patch('/book/{id}', [BookController::class, 'update']);
+        Route::delete('/book/{id}', [BookController::class, 'destroy'])->name('book.destroy');
+
+        // route profile
         Route::get('/profil', [UserController::class, 'index'])->name('profil.index');
         Route::post('/profil/bayar/{id}', [UserController::class, 'bayar'])->name('profil.bayar');
         Route::patch('/profil/{id}', [UserController::class, 'update'])->name('profil.update');
