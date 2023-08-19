@@ -31,7 +31,7 @@
                 <h3 class="icon-title">Lengkap</h3>
                 <p class="icon-caption">
                     Membaca banyak buku dari<br />
-                    perpustakkan smk wikrama
+                    perpustakaan kampus Dharma Negara
                 </p>
             </div>
 
